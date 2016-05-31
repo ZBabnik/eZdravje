@@ -22,7 +22,7 @@
           <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
         </button>
         <!-- ZAČETEK: Ime vaše aplikacije -->
-        <a class="navbar-brand" href="index.html">{ime vaše aplikacije}</a>
+        <a class="navbar-brand" href="index.html">SHITY BMI APP</a>
         <!-- KONEC: Ime vaše aplikacije -->
       </div>
       <div class="collapse navbar-collapse" id="menujska-vrstica">
@@ -40,7 +40,55 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-12 text-center">
-        <p class="lead"><strong>TO-DO</strong>: Na tem mestu implementirajte vašo aplikacijo.</p>
+        <!--<p class="lead"><strong>TO-DO</strong>: Na tem mestu implementirajte vašo aplikacijo.</p>-->
+        <div class="page-header"><h2>BMI - aplikacija <small> Z uporabo EhrScape platforme</small></h2></div>
+      		<div class="row">
+      			<div class="col-lg-6 col-md-6 col-sm-6">
+      				<div class="panel panel-default">
+      					<div class="panel-heading">
+      						<div class="row">
+      							<div class="col-lg-12 col-md-12 col-sm-12"><b>Kreiraj EHR zapis</b></div>
+      						</div>
+      					</div>
+      					<div class="panel-body">
+      						<span class="label label-default">Ime</span><input id="kreirajIme" type="text" class="form-control input-mini" placeholder="Janez">
+      						<span class="label label-default">Priimek</span><input id="kreirajPriimek" type="text" class="form-control" placeholder="Novak">
+      						<span class="label label-default">Spol</span><input id="kreirajSpol" type="text" class="form-control" placeholder="MALE|FEMALE">
+      						<button type="button" class="btn btn-primary btn-xs" onclick="kreirajEHRzaBolnika()">Dodaj osnovne podatke o bolniku</button><span id="kreirajSporocilo"></span>
+      				  	</div>
+      				</div>
+      			</div>
+      			<div class="col-lg-6 col-md-6 col-sm-6">
+      				<div class="panel panel-default">
+      					<div class="panel-heading">
+      						<div class="row">
+      							<div class="col-lg-12 col-md-12 col-sm-12"><b>Vnos podatkov o uporabniku!</b></div>
+      						</div>
+      					</div>
+      					<div class="panel-body">
+      						<span class="label label-default">EHR - id</span><input id="dodajVitalnoEHR" type="text" class="form-control input-mini" placeholder="7b661e12-3a98-21ad-c29e-2dc9f5a3d885">
+      						<span class="label label-default">Telesna višina</span><input id="dodajVitalnoTelesnaVisina" type="text" class="form-control input-mini" placeholder="180 vnesi v cm!">
+      						<span class="label label-default">Telesna teža</span><input id="dodajVitalnoTelesnaTeza" type="text" class="form-control input-mini" placeholder="185 vnesi v kg!">
+      						<button type="button" class="btn btn-primary btn-xs" onclick="dodajMeritveVitalnihZnakov()">Dodaj telesne meritve</button><span id="dodajMeritveVitalnihZnakovSporocilo"></span>
+      				  	</div>
+      				</div>
+      			</div>
+      			<div class="col-lg-6 col-md-6 col-sm-6">
+      				<div class="panel panel-default">
+      					<div class="panel-heading">
+      						<div class="row">
+      							<div class="col-lg-8 col-md-8 col-sm-8"><b>Prikaz BMI na pogladi EHR - id</b></div>
+      							<div class="col-lg-4 col-md-4 col-sm-4"><select class="form-control input-sm" id="preberiEhrIdZaVitalneZnake"><option value="Generiraj"></option><option value="b931580f-2b05-488b-985b-8d9ffb08ad02">Ata Smrk</option><option value="d564c6a3-5a43-4fcc-bfa7-9ac76e9673bd">Pujsa Pepa</option></select></div>
+      						</div>
+      					</div>
+      					<div class="panel-body">
+      						<span class="label label-default">EHR - id</span><input id="meritveVitalnihZnakovEHRid" type="text" class="form-control input-mini" placeholder="7b661e12-3a98-21ad-c29e-2dc9f5a3d885">
+      						<button type="button" class="btn btn-primary btn-xs" onclick="preberiMeritveVitalnihZnakov()">Izpiši/izriši mi podatke o BMI</button><span id="preberiMeritveVitalnihZnakovSporocilo"></span>
+      						<div id="rezultatMeritveVitalnihZnakov"></div>
+      				  	</div>
+      				</div>
+      			</div>
+      		</div>
       </div>
     </div>
   </div>
