@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta name="google-site-verification" content="xTbdwKPTsPE5JNEryvBrCzlxVG_zKu40cWIwEBVTdoA" />
+  <meta name="google-site-verification" content="8YYri9y0hQ7uHFzu9EuJE4pqmqQAT83RT_GSBsq0GAI" />
   <meta charset="utf-8">
   <title>eZdravje :: 4. DN :: OIS 2015/2016</title>
   <link href="knjiznice/css/bootstrap.min.css" rel="stylesheet">
@@ -11,6 +13,7 @@
   <script src="knjiznice/js/bootstrap.min.js"></script>
   <script src="knjiznice/js/koda.js"></script>
   <script src="//d3js.org/d3.v3.min.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB6S7carhxVP5pi0bqw-6MBBhjwrxwE2ps&callback=initMap"async defer></script>
 </head>
 <body>
 
@@ -94,16 +97,22 @@
       					</div>
       					<div class="panel-body">
       						<span class="label label-default">EHR - id</span><input id="meritveVitalnihZnakovEHRid" type="text" class="form-control input-mini" placeholder="7b661e12-3a98-21ad-c29e-2dc9f5a3d885">
-      						<button type="button" class="btn btn-primary btn-xs" onclick="preberiMeritveVitalnihZnakov()">Izpisi osnovne podatke</button><span id="preberiMeritveVitalnihZnakovSporocilo"></span>
+      						<button type="button" class="btn btn-primary btn-xs" onclick="preberiMeritveVitalnihZnakov()">Izračunaj BMI</button>
+      						<button type="button" class="btn btn-primary btn-xs" onclick="makeGraph()">Izriši graf</button><span id="preberiMeritveVitalnihZnakovSporocilo"></span>
+      						<button type="button" class="btn btn-primary btn-xs" onclick="initMap()">Izriši map</button><span id="preberiMeritveVitalnihZnakovSporocilo"></span>
       				  	</div>
       				</div>
       			</div>
-            <div id="rezultatMeritveVitalnihZnakovBasic"></div>
-            <div id="rezultatMeritveVitalnihZnakov"></div>
   	     </div>
+      				  <div id="rezultatMeritveVitalnihZnakovBasic"></div>
+                  <div id="rezultatMeritveVitalnihZnakov"></div>
+                  <div id="map"></div>
+      				</div>
+      		</div>
+      	</div>
       </div>
-    </div>
-  </div>
+   </div>
+</div>
   <!-- KONEC: Vsebina aplikacije -->
 
 </body>
