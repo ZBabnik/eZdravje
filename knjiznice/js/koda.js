@@ -202,9 +202,11 @@ function preberiMeritveVitalnihZnakov() {
 					    		results += "   <b>Telesna višina:</b> ";
 						        results += res[0].height +" "+res[0].unit;
 								results += "</div></div>";
-								$("#rezultatMeritveVitalnihZnakovBasic").append(("<div class='row'><div class='col-lg-8 col-md-8 col-sm-8'><h4>BMI uporabnika "+ party.firstNames +" "+ party.lastNames+" je "+
-									"<b>"+ teza/Math.pow((visina/100), 2)) +"</b></h4></div> " +
-        		    			"</div><button type='button' class='btn btn-primary btn-xs' onclick='izpisiTezoVisino()'>+</button></div>");
+								$("#rezultatMeritveVitalnihZnakovBasic").append("<div class='row'><div class='col-lg-8 col-md-8 col-sm-8'><h4>BMI uporabnika "+ party.firstNames +" "+ party.lastNames+" je "+
+									"<b>"+ teza/Math.pow((visina/100), 2) +"</b></h4></div> " +
+        		    			"</div><button type='button' class='btn btn-primary btn-xs' onclick='izpisiTezoVisino()'>Podrobnosti</button></div>");
+        		    			$('#preberiMeritveVitalnihZnakovSporocilo').append('<button type="button" class="btn btn-primary btn-xs" onclick="nekineki()">Predlagaj rešitev</button>');
+        		    			makeGraph();
 						        //$("#rezultatMeritveVitalnihZnakov").append(results);
 					    	} else {
 					    		$("#preberiMeritveVitalnihZnakovSporocilo").html(
@@ -225,6 +227,7 @@ function preberiMeritveVitalnihZnakov() {
 
 var teza_global;
 var visina_global;
+var bmi_global;
 
 function izpisiTezoVisino() {
 
@@ -285,39 +288,82 @@ function izpisiTezoVisino() {
 					});
 }
 
+function nekineki() {
+	var bmi = teza_global/Math.pow((visina_global/100), 2);
+	console.log(bmi);
+	
+	if (bmi < 26 && bmi > 18) {
+		izrisiGood();
+	}
+	else {
+		izrisiBad();
+	}
+}
+
+function izrisiBad() {
+	document.getElementById('map').style.display = 'block';
+	$("#preberiMeritveVitalnihZnakovSporocilo").append("<div><b>Predlagamo obisk zdravstvenega doma</b></div>");
+	initMap({lat: 46.0562965, lng: 14.5150674});
+}
+
+
+function izrisiGood() {
+	document.getElementById('map').style.display = 'block';
+	$("#preberiMeritveVitalnihZnakovSporocilo").append("<div><b>Zdravi ste - predlagamo obisk Doner Kebab :D</b></div>");
+	initMap({lat: 46.0546795, lng: 14.5303904});
+}
 
 function makeGraph() {
 
-	var w = 500;
-	var h = 500;
+	var w = 600;
+	var h = 300;
 	
-	var data = [{"x":10, "y":10},
-				{"x":20, "y":20},
-				{"x":30, "y":30},
-				{"x":30, "y":30},
-				{"x":40, "y":40},
-				{"x":50, "y":50},
-				{"x":60, "y":60},]
+	var x = [0, 100, 200, 300];
+	var y = [0, 25, 100, 225];
+	var y2 = [0, 18, 72, 162];
+	
+	var xAxis = d3.svg.axis()
+			.scale(x)
+			.orient("bottom");
+			
+	var yAxis = d3.svg.axis()
+			.scale(y)
+			.orient("left");
+			
+	var line = d3.svg.line()
+			.x(function(d){ return x(d.x)})
+			.y(function(d){ return y(h - d.y)});
+			
+	var line2 = d3.svg.line()
+			.x(function(d){ return x(d.x)})
+			.y(function(d){ return y(h - d.y2)});
 
 	var svg = d3.select('#preberiMeritveVitalnihZnakovSporocilo').append('svg')
 				.attr({
 						"width" : w, 
 						"height": h
 					})
-
-	var xAxis = d3.svg.axis().scale(x).orient("bottom");
-	var yAxis = d3.svg.axis().scale(y).orient("left");
 	
-	var line = d3.svg.line()
-						.x(function(d) {  return d.x})
-						.y(function(d) {  return h-d.y});
+	svg.append("g")
+			.attr("class", "x axis")
+			.call(xAxis)
+		.append("text")
+			.attr("transform", "rotate(-90)")
+			.text("Teza")
 						
-	var path = svg.append("path")
-					.attr({
-						d:line(data),
-						"fill":"none",
-						"stroke":"green"
-					})
+	svg.append("g")
+			.attr("class", "y axis")
+			.call(yAxis)
+		.append("text")
+			.attr("transform", "rotate(-90)")
+			.text("Teza")
+	
+	svg.append("path")
+			.attr("class", "line")
+			.attr("d", line)
+			.attr("d", line2)
+				
+
 					
 	//var label = svg.selectAll("text")
 	//				.data()
@@ -361,36 +407,21 @@ function makeGraph() {
 	*/
 }
 
-
-function initMap() {
-  var chicago = {lat: 41.85, lng: -87.65};
-  var indianapolis = {lat: 39.79, lng: -86.14};
-
-  var map = new google.maps.Map($('#map'), {
-    center: chicago,
-    scrollwheel: false,
-    zoom: 7
-  });
-
-  var directionsDisplay = new google.maps.DirectionsRenderer({
-    map: map
-  });
-
-  // Set destination, origin and travel mode.
-  var request = {
-    destination: indianapolis,
-    origin: chicago,
-    travelMode: google.maps.TravelMode.DRIVING
-  };
-
-  // Pass the directions request to the directions service.
-  var directionsService = new google.maps.DirectionsService();
-  directionsService.route(request, function(response, status) {
-    if (status == google.maps.DirectionsStatus.OK) {
-      // Display the route on the map.
-      directionsDisplay.setDirections(response);
-    }
-  });
+function initMap(global) {
+	
+	// Create a map object and specify the DOM element for display.
+	var map = new google.maps.Map(document.getElementById('map'), {
+	  center: global,
+	  scrollwheel: true,
+	  zoom: 15
+	});
+	
+	// Create a marker and set its position.
+	var marker = new google.maps.Marker({
+	  map: map,
+	  position: global,
+	  title: 'eZdravje!'
+	});
 }
 
 // TODO: Tukaj implementirate funkcionalnost, ki jo podpira vaša aplikacija
