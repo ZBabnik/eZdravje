@@ -265,9 +265,8 @@ function preberiMeritveVitalnihZnakov() {
 								results += "</div></div>";
 								$("#imeInPriimekUporabnika").append("<div class='row'><div class='col-lg-8 col-md-8 col-sm-8'><h4>UPORABNIK: <b>"+ party.firstNames +" "+ party.lastNames+
 									"</b> BMI: <b>"+ Math.ceil(teza/Math.pow((visina/100), 2))+"</b></h4></div>");
-        		    			$('#rezultatMeritveVitalnihZnakovBasic').append("<button type='button' class='btn btn-primary btn-xs' onclick='prikaziTezoVisino()'>Podrobnosti</button></div><button type='button' class='btn btn-primary btn-xs' onclick='mapOdlocitev()'>Predlagaj rešitev</button>");
+        		    			$('#rezultatMeritveVitalnihZnakovBasic').append("<button type='button' class='btn btn-primary btn-xs' onclick='decide()'>Podrobnosti</button></div><button type='button' class='btn btn-primary btn-xs' onclick='mapOdlocitev()'>Predlagaj rešitev</button>");
         		    			makeGraph();
-						        izpisiTezoVisino();
 					    	} else {
 					    		$("#preberiMeritveVitalnihZnakovSporocilo").html(
                     "<span class='obvestilo label label-warning fade-in'>" +
@@ -285,23 +284,20 @@ function preberiMeritveVitalnihZnakov() {
 	}
 }
 
-/*
-function prikaziTezoVisino() {
-	document.getElementById('podrobnosti').style.display = 'block';
-	$('#rezultatMeritveVitalnihZnakovBasic').empty();
-	$('#rezultatMeritveVitalnihZnakovBasic').append("<button type='button' class='btn btn-primary btn-xs' onclick='skrijTezoVisino()'>Podrobnosti</button></div><button type='button' class='btn btn-primary btn-xs' onclick='mapOdlocitev()'>Predlagaj rešitev</button></button></div><button type='button' class='btn btn-primary btn-xs' onclick='mapOdlocitev()'>Predlagaj rešitev</button>");
-}
-
-function skrijTezoVisino() {
-	document.getElementById('podrobnosti').style.display = 'none';
-	izpisiTezoVisino();
-}
-*/
-
 //GOOD
 var teza_global;
 var visina_global;
 var bmi_global;
+
+function decide() {
+	var lol = $("#podrobnosti").val();
+	if(lol) {
+		$("#podrobnosti").empty();
+	}
+	else {
+		izpisiTezoVisino();
+	}
+}
 
 //GOOD
 function izpisiTezoVisino() {
@@ -312,7 +308,8 @@ function izpisiTezoVisino() {
 	var teza;
 	var visina;
 	
-					//$("#rezultatMeritveVitalnihZnakov").empty();
+	
+					$("#podrobnosti").empty();
 					results = "<div class='row>'<div class='col-lg-10 col-md-10 col-sm-10'>";
 					$.ajax({
 					    url: baseUrl + "/view/" + ehrId + "/" + "weight",
