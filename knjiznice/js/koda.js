@@ -93,102 +93,7 @@ function drawBackgroundColor() {
     var chart = new google.visualization.LineChart(document.getElementById('rezultatMeritveVitalnihZnakov'));
     chart.draw(data, options);
 }
-/*
-// FCKING FIX THIS GARBAGE
-function makeGraph() {
 
-	var w = 600;
-	var h = 300;
-	
-	var x = [0, 100, 200, 300];
-	var y = [0, 25, 100, 225];
-	var y2 = [0, 18, 72, 162];
-	
-	var xAxis = d3.svg.axis()
-			.scale(x)
-			.orient("bottom");
-			
-	var yAxis = d3.svg.axis()
-			.scale(y)
-			.orient("left");
-			
-	var line = d3.svg.line()
-			.x(function(d){ return x(d.x)})
-			.y(function(d){ return y(h - d.y)});
-			
-	var line2 = d3.svg.line()
-			.x(function(d){ return x(d.x)})
-			.y(function(d){ return y(h - d.y2)});
-
-	var svg = d3.select('#rezultatMeritveVitalnihZnakov').append('svg')
-				.attr({
-						"width" : w, 
-						"height": h
-					})
-	
-	svg.append("g")
-			.attr("class", "x axis")
-			.call(xAxis)
-		.append("text")
-			.attr("transform", "rotate(-90)")
-			.text("Teza")
-						
-	svg.append("g")
-			.attr("class", "y axis")
-			.call(yAxis)
-		.append("text")
-			.attr("transform", "rotate(-90)")
-			.text("Teza")
-	
-	svg.append("path")
-			.attr("class", "line")
-			.attr("d", line)
-			.attr("d", line2)
-				
-
-					
-	//var label = svg.selectAll("text")
-	//				.data()
-						
-	/*
-	d3.tsv("bmi.tsv", type, function(napaka, data){
-		if(napaka) console.log("ERR");
-		console.log(data);
-		
-		x.domain(d3.extent(data, function(d) {
-			console.log(d.teza);
-			return d.teza;
-		}))
-		
-		y.domain(d3.extent(data, function(d) {
-			console.log(d.visina);
-			return d.visina;
-		}))
-		
-		svg.append("g")
-					.attr("class", "x axis")
-					.attr("transform", "translate(0," + height + ")")
-					.call(xAxis)
-
-		
-		svg.append("g")
-					.attr("class", "y axis")
-					.attr("transform", "rotate(-90)")
-					.call(yAxis)
-					
-		svg.append("path")
-    		.attr("class", "line")
-    		.attr("d", line);
-	})
-	
-	function type(d) {
-		  d.teza = +d.teza;
-		  d.visina = +d.visina;
-		  return d;
-	}
-	
-}
-*/
 // GOOD
 function mapOdlocitev() {
 	var bmi = teza_global/Math.pow((visina_global/100), 2);
@@ -244,7 +149,7 @@ function pocistiPodatke() {
 	$("#map").empty();
 	$("#podrobnosti").empty();
 	$("#predlogBMI").empty();
-	
+	drawBackgroundColor();
 }
 
 //GOOD
