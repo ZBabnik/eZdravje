@@ -47,16 +47,53 @@ function getSessionId() {
     ehrId3 = "170e15d4-d324-4de3-9aeb-8aec0cbfc875";
     
     if(stPacienta == 1) {
-    	$("#preberiMeritveVitalnihZnakovSporocilo").append("<div>Lena Lenoba : "+ehrId1+"</div>");
+    	$("#preberiEhrIdZaVitalneZnake").append("<option value="+ehrId1+">Lena Lenoba</option>");
     }
     if(stPacienta == 2) {
-    	$("#preberiMeritveVitalnihZnakovSporocilo").append("<div>Povprečko Povprečnež : "+ehrId2+"</div>");
+    	$("#preberiEhrIdZaVitalneZnake").append("<option value="+ehrId2+">Povprečko Povprečnež</option>");
     }
     if(stPacienta == 2) {
-    	$("#preberiMeritveVitalnihZnakovSporocilo").append("<div>Suhi Suhec : "+ehrId3+"</div>");
+    	$("#preberiEhrIdZaVitalneZnake").append("<option value="+ehrId3+">Suhi Suhec</option>");
     }
 }
 
+//GOOD
+$(document).ready(function() {
+		
+		$('#preberiEhrIdZaVitalneZnake').change(function() {
+		$("#preberiMeritveVitalnihZnakovSporocilo").html("");
+		$("#rezultatMeritveVitalnihZnakov").html("");
+		$("#meritveVitalnihZnakovEHRid").val($(this).val());
+		
+	});	
+})
+
+function drawBackgroundColor() {
+	
+    var data = google.visualization.arrayToDataTable
+    ([
+    	['X', 'BMI(18)', 'BMI(25)'],
+        ['0',  0,  0],
+        ['100',  18,   25],
+        ['200',  72,  100],
+        ['300',  162, 225]
+    ]);
+      
+	var options = {
+        hAxis: {
+        	title: 'Visina'
+    	},
+        vAxis: {
+        	title: 'Teza'
+        },
+        backgroundColor: '#f1f8e9',
+        colors: ['black', 'blue']
+        };
+    
+    var chart = new google.visualization.LineChart(document.getElementById('rezultatMeritveVitalnihZnakov'));
+    chart.draw(data, options);
+}
+/*
 // FCKING FIX THIS GARBAGE
 function makeGraph() {
 
@@ -149,9 +186,9 @@ function makeGraph() {
 		  d.visina = +d.visina;
 		  return d;
 	}
-	*/
+	
 }
-
+*/
 // GOOD
 function mapOdlocitev() {
 	var bmi = teza_global/Math.pow((visina_global/100), 2);
@@ -205,6 +242,9 @@ function pocistiPodatke() {
 	$("#rezultatMeritveVitalnihZnakov").empty();
 	document.getElementById('map').style.display = 'none';
 	$("#map").empty();
+	$("#podrobnosti").empty();
+	$("#predlogBMI").empty();
+	
 }
 
 //GOOD
@@ -264,9 +304,10 @@ function preberiMeritveVitalnihZnakov() {
 						        results += res[0].height +" "+res[0].unit;
 								results += "</div></div>";
 								$("#imeInPriimekUporabnika").append("<div class='row'><div class='col-lg-8 col-md-8 col-sm-8'><h4>UPORABNIK: <b>"+ party.firstNames +" "+ party.lastNames+
-									"</b> BMI: <b>"+ Math.ceil(teza/Math.pow((visina/100), 2))+"</b></h4></div>");
-        		    			$('#rezultatMeritveVitalnihZnakovBasic').append("<button type='button' class='btn btn-primary btn-xs' onclick='decide()'>Podrobnosti</button></div><button type='button' class='btn btn-primary btn-xs' onclick='mapOdlocitev()'>Predlagaj rešitev</button>");
-        		    			makeGraph();
+									"<br></b> BMI: <b>"+ Math.ceil(teza/Math.pow((visina/100), 2))+"</b></h4></div>");
+        		    			$('#rezultatMeritveVitalnihZnakovBasic').append("<button type='button' class='btn btn-primary btn-xs' onclick='izpisiTezoVisino()'>Podrobnosti</button></div><button type='button' class='btn btn-primary btn-xs' onclick='mapOdlocitev()'>Predlagaj rešitev</button>");
+        		    			google.charts.load('current', {packages: ['corechart']});
+								google.charts.setOnLoadCallback(drawBackgroundColor);
 					    	} else {
 					    		$("#preberiMeritveVitalnihZnakovSporocilo").html(
                     "<span class='obvestilo label label-warning fade-in'>" +
@@ -289,14 +330,10 @@ var teza_global;
 var visina_global;
 var bmi_global;
 
-function decide() {
-	var lol = $("#podrobnosti").val();
-	if(lol) {
-		$("#podrobnosti").empty();
-	}
-	else {
-		izpisiTezoVisino();
-	}
+function zbrisiTezoVisino() {
+	$('#rezultatMeritveVitalnihZnakovBasic').empty();
+	$('#rezultatMeritveVitalnihZnakovBasic').append("<button type='button' class='btn btn-primary btn-xs' onclick='izpisiTezoVisino()'>Podrobnosti</button></div><button type='button' class='btn btn-primary btn-xs' onclick='mapOdlocitev()'>Predlagaj rešitev</button>");
+	$("#podrobnosti").empty();	
 }
 
 //GOOD
@@ -307,7 +344,6 @@ function izpisiTezoVisino() {
 	var results;
 	var teza;
 	var visina;
-	
 	
 					$("#podrobnosti").empty();
 					results = "<div class='row>'<div class='col-lg-10 col-md-10 col-sm-10'>";
@@ -345,6 +381,8 @@ function izpisiTezoVisino() {
 						        results += res[0].height +" "+res[0].unit;
 						        //results += "   <b>BMI:</b> "+ (teza/Math.pow((visina/100), 2));
 								results += "</div></div>";
+								$('#rezultatMeritveVitalnihZnakovBasic').empty();
+								$('#rezultatMeritveVitalnihZnakovBasic').append("<button type='button' class='btn btn-primary btn-xs' onclick='zbrisiTezoVisino()'>Podrobnosti</button></div><button type='button' class='btn btn-primary btn-xs' onclick='mapOdlocitev()'>Predlagaj rešitev</button>");
 						        $("#podrobnosti").append(results);
 					    	} else {
 					    		$("#preberiMeritveVitalnihZnakovSporocilo").html(

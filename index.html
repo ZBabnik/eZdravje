@@ -21,6 +21,7 @@
   <script src="knjiznice/js/koda.js"></script>
   <script src="//d3js.org/d3.v3.min.js"></script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB6S7carhxVP5pi0bqw-6MBBhjwrxwE2ps&callback=initMap"async defer></script>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 <body>
 
@@ -98,7 +99,7 @@
       				<div class="panel panel-default">
       					<div class="panel-heading">
       						<div class="row">
-      							<div class="col-lg-8 col-md-8 col-sm-8"><b>Prikaz BMI na pogladi EHR - id</b></div>
+      							<div class="col-lg-8 col-md-8 col-sm-8"><b>Prikaz BMI na pogladi EHR - id</b></div><div class="col-lg-3 col-md-3 col-sm-3"><select class="form-control input-sm" id="preberiEhrIdZaVitalneZnake"><option value=""></option></select></div>
       							<div class="col-lg-4 col-md-4 col-sm-4"></div>
       						</div>
       					</div>
@@ -123,12 +124,14 @@
       						<div class="row">
       							<div class="col-lg-12 col-md-12 col-sm-12"><b><div id="imeInPriimekUporabnika"></b></div>
       						</div>
+      						<div class="col-lg-12 col-md-12 col-sm-12">
       						<div class="row">
         					  <div id="rezultatMeritveVitalnihZnakovBasic"></div>
         					  <div id="podrobnosti"></div>
-                    <div id="rezultatMeritveVitalnihZnakov" align="left"></div>
+                    <div id="rezultatMeritveVitalnihZnakov"></div>
                     <div id="predlogBMI"></div>
-        				  	<div id="map" align="right"></div>
+        				  	<div id="map"></div>
+      				  	</div>
       				  	</div>
       		    </div>
   	     </div>
