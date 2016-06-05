@@ -62,7 +62,7 @@ $(document).ready(function() {
 		
 		$('#preberiEhrIdZaVitalneZnake').change(function() {
 		$("#preberiMeritveVitalnihZnakovSporocilo").html("");
-		$("#rezultatMeritveVitalnihZnakov").html("");
+		//$("#rezultatMeritveVitalnihZnakov").html("");
 		$("#meritveVitalnihZnakovEHRid").val($(this).val());
 		
 	});	
@@ -74,9 +74,16 @@ function drawBackgroundColor() {
     ([
     	['X', 'BMI(18)', 'BMI(25)'],
         ['0',  0,  0],
+        ['20', 0.72, 1],
+        ['40', 3, 4],
+        ['60', 6.5, 9],
+        ['80', 11, 16],
         ['100',  18,   25],
+        ['120', 26, 36],
+        ['140', 35, 49],
+        ['160', 46, 64],
+        ['180', 58, 81],
         ['200',  72,  100],
-        ['300',  162, 225]
     ]);
       
 	var options = {
@@ -144,12 +151,12 @@ function initMap(global) {
 function pocistiPodatke() {
 	$("#imeInPriimekUporabnika").empty();
 	$("#rezultatMeritveVitalnihZnakovBasic").empty();
-	$("#rezultatMeritveVitalnihZnakov").empty();
+	//$("#rezultatMeritveVitalnihZnakov").empty();
 	document.getElementById('map').style.display = 'none';
 	$("#map").empty();
 	$("#podrobnosti").empty();
 	$("#predlogBMI").empty();
-	drawBackgroundColor();
+	//drawBackgroundColor();
 }
 
 //GOOD
@@ -209,7 +216,7 @@ function preberiMeritveVitalnihZnakov() {
 						        results += res[0].height +" "+res[0].unit;
 								results += "</div></div>";
 								$("#imeInPriimekUporabnika").append("<div class='row'><div class='col-lg-8 col-md-8 col-sm-8'><h4>UPORABNIK: <b>"+ party.firstNames +" "+ party.lastNames+
-									"<br></b> BMI: <b>"+ Math.ceil(teza/Math.pow((visina/100), 2))+"</b></h4></div>");
+									"<br></b> BMI: <b>"+ Math.ceil(teza/Math.pow((visina/100), 2))+"</b></h4><h6>Če se izpiše rezultat NaN prosim poskusite ponovno izračunati BMI!</h6></div>");
         		    			$('#rezultatMeritveVitalnihZnakovBasic').append("<button type='button' class='btn btn-primary btn-xs' onclick='izpisiTezoVisino()'>Podrobnosti</button></div><button type='button' class='btn btn-primary btn-xs' onclick='mapOdlocitev()'>Predlagaj rešitev</button>");
         		    			google.charts.load('current', {packages: ['corechart']});
 								google.charts.setOnLoadCallback(drawBackgroundColor);
